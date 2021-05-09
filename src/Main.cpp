@@ -10,7 +10,7 @@ int main() {
 
     for (short x = 0; x < 0xC; x++)
         for (short y = 0; y < 0xC; y++) {
-            std::cout << algorithm.get_type_of_cell(true, x, y);
+            std::cout << algorithm.get_type_of_cell(false, x, y);
         }
 
     return 0;
