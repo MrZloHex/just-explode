@@ -1,9 +1,10 @@
 CXX			:= g++
-CXX_FLAGS	:= -c -Wall -Wextra -Werror
+CXX_FLAGS	:= -c -Wall -Wextra 
 SFML_FLAGS	:= -lsfml-graphics -lsfml-window -lsfml-system
 
 MAIN_FILE	:= Main
-CLASSES		:= Algorithm
+ALG			:= Algorithm
+ILL			:= Illustration
 SRC_DIR		:= ./src
 EXEC_FILE	:= just-explode
 
@@ -14,15 +15,18 @@ clean:
 	@echo "🧹 Cleaning ..."
 	-rm $(MAIN_FILE).o $(CLASSES).o $(EXEC_FILE)
 
-compile: $(MAIN_FILE).o $(CLASSES).o
+compile: $(MAIN_FILE).o $(ALG).o $(ILL).o
 	@echo "🚧 Building ..."
-	$(CXX) $(MAIN_FILE).o $(CLASSES).o -o $(EXEC_FILE) $(SFML_FLAGS)
+	$(CXX) $(MAIN_FILE).o $(ALG).o $(ILL).o -o $(EXEC_FILE) $(SFML_FLAGS)
 
 $(MAIN_FILE).o:
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(MAIN_FILE).cpp
 
-$(CLASSES).o:
-	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(CLASSES).cpp
+$(ALG).o:
+	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(ALG).cpp
+
+$(ILL).o:
+	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(ILL).cpp
 
 execute:
 	@echo "🚀 Executing ..."
