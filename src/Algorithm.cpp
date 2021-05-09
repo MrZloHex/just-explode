@@ -17,6 +17,12 @@
 */
 
 
+// constructor
+Algorithm::Algorithm(short sf, short sc) {
+    Algorithm::size_field = sf;
+    Algorithm::size_cell = sc;
+}
+
 
 /* initing fields; field - generate bombs and nothing
                            show_field - all idk             */
@@ -58,4 +64,14 @@ void Algorithm::generate_map() {
 unsigned short Algorithm::get_type_of_cell(bool map, short x, short y) {
     if (map) return Algorithm::field[x][y];
     else return Algorithm::show_field[x][y];
+}
+
+
+
+short Algorithm::get_size_field() {
+    return Algorithm::size_field;
+}
+
+short Algorithm::get_size_cell() {
+    return Algorithm::size_cell;
 }

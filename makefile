@@ -1,5 +1,6 @@
 CXX			:= g++
 CXX_FLAGS	:= -c -Wall -Wextra -Werror
+SFML_FLAGS	:= -lsfml-graphics -lsfml-window -lsfml-system
 
 MAIN_FILE	:= Main
 CLASSES		:= Algorithm
@@ -15,7 +16,7 @@ clean:
 
 compile: $(MAIN_FILE).o $(CLASSES).o
 	@echo "🚧 Building ..."
-	$(CXX) $(MAIN_FILE).o $(CLASSES).o -o $(EXEC_FILE)
+	$(CXX) $(MAIN_FILE).o $(CLASSES).o -o $(EXEC_FILE) $(SFML_FLAGS)
 
 $(MAIN_FILE).o:
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(MAIN_FILE).cpp
