@@ -13,7 +13,7 @@ all: clean compile execute
 
 clean:
 	@echo "🧹 Cleaning ..."
-	-rm $(MAIN_FILE).o $(CLASSES).o $(EXEC_FILE)
+	-rm $(MAIN_FILE).o $(ALG).o $(ILL).o $(EXEC_FILE) 
 
 compile: $(MAIN_FILE).o $(ALG).o $(ILL).o
 	@echo "🚧 Building ..."
