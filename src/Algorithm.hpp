@@ -20,18 +20,25 @@ class Algorithm {
         ~Algorithm();
 
         
-
         /* initing fields; field - generate bombs and nothing
                            show_field - all idk             */
         void init_fields();
         // places all markdowns at field
         void generate_map();
+
+
         // checking for explodes
         void bomb_handler();
+
+
         /* getting type of cell in field
             true - field
             false - show_field          */
         unsigned short get_type_of_cell(bool map, short x, short y);
+        
+        // method of getting size of game field
         short get_size_field();
+        
+        // method of getting size of cell in pixels
         short get_size_cell();
 };

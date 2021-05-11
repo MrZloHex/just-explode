@@ -5,11 +5,11 @@ using namespace std;
 
 /*
         0 - nothing
-        1 - 1 bomb
-        2 - 
-        3 - 
-        4 - 
-        5 - 
+        1 - 1 bomb around
+        2 - 2 bombs
+        3 - 3
+        4 - 4 
+        5 - 5
         6 - BOMBEE
         7 - rejected mine
         8 - idk
@@ -23,14 +23,13 @@ Algorithm::Algorithm(short size, short cell) : size_field (size) {
     Algorithm::size_field = size;
     Algorithm::size_cell = cell;
 
+    // taking memory for matrices
     Algorithm::field = new unsigned short *[size];
     Algorithm::show_field = new unsigned short *[size];
     for (short i = 0; i < size; i++) {
         Algorithm::field[i] = new unsigned short[size];
         Algorithm::show_field[i] = new unsigned short [size];
     }
-        
-
 }
 
 // destructor
@@ -45,16 +44,16 @@ Algorithm::~Algorithm() {
 
 
 
-
-
-
 /* initing fields; field - generate bombs and nothing
                            show_field - all idk             */
 void Algorithm::init_fields() {
     srand(time(NULL));
     for (short x = 0; x < Algorithm::size_field; x++)
         for (short y = 0; y < Algorithm::size_field; y++) {
+            // idk cells for playes
             Algorithm::show_field[x][y] = 0x8;
+
+            // adding bombs at main field whith chance in 20%
             if (rand()%5 == 0) Algorithm::field[x][y] = 0x6;
             else Algorithm::field[x][y] = 0;
         }
@@ -66,8 +65,13 @@ void Algorithm::init_fields() {
 void Algorithm::generate_map() {
     for (short x = 0; x < Algorithm::size_field; x++)
         for (short y = 0; y < Algorithm::size_field; y++) {
+            // counter of bombs for each cell without bomb
             unsigned short amount_bomb = 0;
+
+            // do not count bomb for cell with bomb )
             if (Algorithm::field[x][y] == 6)   continue;
+
+
             if (x != 0) {
                 if (y != 0) 
                     if (Algorithm::field[x-1][y-1] == 6)   amount_bomb++;
@@ -94,6 +98,8 @@ void Algorithm::generate_map() {
                 if  (y != (Algorithm::size_field-1))
                     if (Algorithm::field[x][y+1]   == 6)   amount_bomb++;
             }
+
+            // writing amount of bombs in cell
             Algorithm::field[x][y] = amount_bomb;
         }           
 }
@@ -109,11 +115,13 @@ unsigned short Algorithm::get_type_of_cell(bool map, short x, short y) {
 }
 
 
-
+// method of getting size of game field
 short Algorithm::get_size_field() {
     return Algorithm::size_field;
 }
 
+
+// method of getting size of cell in pixels
 short Algorithm::get_size_cell() {
     return Algorithm::size_cell;
 }
