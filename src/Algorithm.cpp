@@ -67,17 +67,35 @@ void Algorithm::generate_map() {
     for (short x = 0; x < Algorithm::size_field; x++)
         for (short y = 0; y < Algorithm::size_field; y++) {
             unsigned short amount_bomb = 0;
-            if (Algorithm::field[x][y]     == 6)   continue;
-            if (Algorithm::field[x-1][y-1] == 6)   amount_bomb++;
-            if (Algorithm::field[x-1][y]   == 6)   amount_bomb++;
-            if (Algorithm::field[x-1][y+1] == 6)   amount_bomb++;
-            if (Algorithm::field[x][y+1]   == 6)   amount_bomb++;
-            if (Algorithm::field[x+1][y+1] == 6)   amount_bomb++;
-            if (Algorithm::field[x+1][y]   == 6)   amount_bomb++;
-            if (Algorithm::field[x+1][y-1] == 6)   amount_bomb++;
-            if (Algorithm::field[x][y-1]   == 6)   amount_bomb++;
+            if (Algorithm::field[x][y] == 6)   continue;
+            if (x != 0) {
+                if (y != 0) 
+                    if (Algorithm::field[x-1][y-1] == 6)   amount_bomb++;
+
+                if (y != (Algorithm::size_field-1))
+                    if (Algorithm::field[x-1][y+1] == 6)   amount_bomb++;
+
+                if (Algorithm::field[x-1][y]   == 6)   amount_bomb++;
+            }
+            else if (x != (Algorithm::size_field-1)) {
+                if (y != 0)
+                    if (Algorithm::field[x+1][y-1] == 6)   amount_bomb++;
+
+                if (y != (Algorithm::size_field-1))
+                    if (Algorithm::field[x+1][y+1] == 6)   amount_bomb++;
+                
+                if (Algorithm::field[x+1][y]   == 6)   amount_bomb++;
+                
+            }
+            else {
+                if (y != 0)
+                    if (Algorithm::field[x][y-1]   == 6)   amount_bomb++;
+
+                if  (y != (Algorithm::size_field-1))
+                    if (Algorithm::field[x][y+1]   == 6)   amount_bomb++;
+            }
             Algorithm::field[x][y] = amount_bomb;
-        }   
+        }           
 }
 
 
