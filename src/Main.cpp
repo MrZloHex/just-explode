@@ -3,7 +3,15 @@
 
 using namespace std;
 
+template <typename T>
+void f(initializer_list<T> list) {
+    for (auto elem: list)
+        cout << elem << endl;
+}
+
 int main() {
+    f({1, 2, 3});
+
     auto alg = new Algorithm(10);
 
     alg->Set(0, 0, 4);

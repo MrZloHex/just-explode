@@ -5,9 +5,9 @@ using namespace std;
 
 Algorithm::Algorithm(int size) : size (size) {
     Algorithm::size = size;
-    Algorithm::array = new int*[size];
+    Algorithm::array = new unsigned short*[size];
     for (short i = 0; i < size; i++)
-        Algorithm::array[i] = new int[size];
+        Algorithm::array[i] = new unsigned short[size];
 }
 
 Algorithm::~Algorithm() {
@@ -16,11 +16,11 @@ Algorithm::~Algorithm() {
     delete[] Algorithm::array;
 }
 
-void Algorithm::Set(int index1, int index2, int value) {
+void Algorithm::Set(int index1, int index2, unsigned short value) {
     Algorithm::array[index1][index2] = value;
 }
 
-int Algorithm::Get(int index1, int index2) {
+unsigned short Algorithm::Get(int index1, int index2) {
     return array[index1][index2];
 }
 
