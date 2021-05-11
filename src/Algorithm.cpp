@@ -24,7 +24,7 @@ int Algorithm::Get(int index1, int index2) {
     return array[index1][index2];
 }
 
-void Algorithm::PrintLength() {
+/*void Algorithm::PrintLength() {
     //cout << *(&Algorithm::array + 1) - Algorithm::array << endl;
     cout << sizeof(Algorithm::array)/sizeof(Algorithm::array[0]) << endl;
-}
+}*/

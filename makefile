@@ -1,5 +1,5 @@
 CXX			:= g++
-CXX_FLAGS	:= -c -Wall -Wextra 
+CXX_FLAGS	:= -c -Wall -Wextra
 SFML_FLAGS	:= -lsfml-graphics -lsfml-window -lsfml-system
 
 MAIN_FILE	:= Main

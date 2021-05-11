@@ -9,6 +9,6 @@ class Algorithm {
         ~Algorithm();
         void Set(int index1, int index2, int value);
         int Get(int index1, int index2);
-        void PrintLength();
+        //void PrintLength();
  
 };
