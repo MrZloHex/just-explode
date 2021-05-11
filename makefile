@@ -16,7 +16,7 @@ clean:
 
 compile: $(MAIN_FILE).o $(ALG).o
 	@echo "🚧 Building ..."
-	$(CXX) $(MAIN_FILE).o $(ALG).o -o $(EXEC_FILE)
+	$(CXX) $(MAIN_FILE).o $(ALG).o -o $(EXEC_FILE) $(SFML_FLAGS)
 
 $(MAIN_FILE).o:
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(MAIN_FILE).cpp
