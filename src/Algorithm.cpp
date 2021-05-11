@@ -18,10 +18,17 @@
 
 
 // constructor
-Algorithm::Algorithm(short sf, short sc) {
-    Algorithm::size_field = sf;
-    Algorithm::size_cell = sc;
+Algorithm::Algorithm(size_t size) : size (size) {
+    /*Algorithm::size_field = sf;
+    Algorithm::size_cell = sc;*/
+    Algorithm::size_field = size;
+    Algorithm::buff = new unsigned short[size][size];
 }
+// destructor
+Algorithm::~Algorithm() {
+    delete[] Algorithm::buff;
+}
+
 
 
 /* initing fields; field - generate bombs and nothing

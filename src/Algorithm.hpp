@@ -1,11 +1,15 @@
+#include <cstddef>
 #pragma once
 
 class Algorithm {
     private:
+        size_t size;
+        unsigned short **buff;
+
         // amount of cell; field is always square
         short size_field;
         // size of one cell in pexels
-        short size_cell;
+        short size_cell = 0x19;
         // game field with all bombs
         unsigned short field[0xC][0xC];
         // game field which player sees
@@ -15,7 +19,10 @@ class Algorithm {
 
     public:
         // constructor of class; size_field, size_cell
-        Algorithm(short sf, short sc);
+        explicit Algorithm(size_t size);
+        // destructor of class
+        ~Algorithm();
+
         /* initing fields; field - generate bombs and nothing
                            show_field - all idk             */
         void init_fields();
