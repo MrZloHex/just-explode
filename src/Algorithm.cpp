@@ -13,7 +13,7 @@ using namespace std;
         6 - 6
         7 - 7
         8 - 8
-        
+
         10 - BOMBEE
         11 - rejected mine
         12 - idk
@@ -108,6 +108,10 @@ void Algorithm::generate_map() {
         }           
 }
 
+
+void bomb_handler(bool mouse, unsigned int x, unsigned int y){
+    
+}
 
 
 /* getting type of cell in field

@@ -27,8 +27,10 @@ class Algorithm {
         void generate_map();
 
 
-        // checking for explodes
-        void bomb_handler();
+        /* checking for explodes
+            true - right button on mouse
+            false - left button on mouse     */
+        void bomb_handler(bool mouse, unsigned int x, unsigned int y);
 
 
         /* getting type of cell in field

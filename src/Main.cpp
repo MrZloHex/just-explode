@@ -20,9 +20,9 @@ int main() {
     // life cycle
     while (window.isOpen()) {
         // detecting dislocation of mouse pointer
-        /*Vector2i position = Mouse::getPosition(window);
-        unsigned int x = position.x/algorithm.get_size_cell();
-        unsigned int y = position.y/algorithm.get_size_cell();*/
+        Vector2i position = Mouse::getPosition(window);
+        unsigned int x = position.x/algorithm->get_size_cell();
+        unsigned int y = position.y/algorithm->get_size_cell();
 
 
         //event object for pooling events
@@ -36,11 +36,11 @@ int main() {
                     window.close();
 
 
-            /*if (event.type == Event::MouseButtonPressed)
+            if (event.type == Event::MouseButtonPressed)
                 if (event.key.code == Mouse::Left) 
-                    algorithn.bomb_handler(false, x, y, field, show_field);
+                    algorithm->bomb_handler(false, x, y);
                 else if (event.key.code == Mouse::Right)
-                    algorithm.bomb_handler(true, x, y, field, show_field);*/
+                    algorithm->bomb_handler(true, x, y);
         }
 
         // update frame
@@ -55,13 +55,9 @@ int main() {
                 square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));
                 window.draw(square);
             }
-
-        //illustration.test();
-
         window.display();
     }
 
     delete algorithm;
-    
     return 0;
 }
