@@ -1,3 +1,3 @@
 # Just Explode
 
-## **Just Explode this shit**
+**Just Explode this shit**

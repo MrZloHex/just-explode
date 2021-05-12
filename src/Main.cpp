@@ -7,12 +7,6 @@ using namespace std;
 using namespace sf;
 
 int main() {
-    int *color;
-    color = Colorize(14);
-
-    for (int i = 0; i < 3; i++)
-        cout << color[i] << endl;
-
     // initializating algorihm all fields of data
     auto algorithm = new Algorithm(0xC, 0x19);
 
@@ -54,7 +48,9 @@ int main() {
             for (short y = 0; y < algorithm->get_size_field(); y++) {
                 RectangleShape square(Vector2f(algorithm->get_size_cell()-2, algorithm->get_size_cell()-2));
 
-                square.setFillColor(Color(0xFF, 0, 0));
+                int *Colour = Colorize(algorithm->get_type_of_cell(false, x, y));
+
+                square.setFillColor(Color(Colour[0], Colour[1], Colour[2]));
 
                 square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));
                 window.draw(square);
