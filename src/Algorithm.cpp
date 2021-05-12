@@ -10,11 +10,15 @@ using namespace std;
         3 - 3
         4 - 4 
         5 - 5
-        6 - BOMBEE
-        7 - rejected mine
-        8 - idk
-        9 - BOOOOOOM
-        10 - WIN
+        6 - 6
+        7 - 7
+        8 - 8
+        
+        10 - BOMBEE
+        11 - rejected mine
+        12 - idk
+        13 - BOOOOOOM
+        14 - WIN
 */
 
 
@@ -51,10 +55,10 @@ void Algorithm::init_fields() {
     for (short x = 0; x < Algorithm::size_field; x++)
         for (short y = 0; y < Algorithm::size_field; y++) {
             // idk cells for playes
-            Algorithm::show_field[x][y] = 0x8;
+            Algorithm::show_field[x][y] = 12;
 
             // adding bombs at main field whith chance in 20%
-            if (rand()%5 == 0) Algorithm::field[x][y] = 0x6;
+            if (rand()%5 == 0) Algorithm::field[x][y] = 10;
             else Algorithm::field[x][y] = 0;
         }
 }
@@ -69,34 +73,34 @@ void Algorithm::generate_map() {
             unsigned short amount_bomb = 0;
 
             // do not count bomb for cell with bomb )
-            if (Algorithm::field[x][y] == 6)   continue;
+            if (Algorithm::field[x][y] == 10)   continue;
 
 
             if (x != 0) {
                 if (y != 0) 
-                    if (Algorithm::field[x-1][y-1] == 6)   amount_bomb++;
+                    if (Algorithm::field[x-1][y-1] == 10)   amount_bomb++;
 
                 if (y != (Algorithm::size_field-1))
-                    if (Algorithm::field[x-1][y+1] == 6)   amount_bomb++;
+                    if (Algorithm::field[x-1][y+1] == 10)   amount_bomb++;
 
-                if (Algorithm::field[x-1][y]   == 6)   amount_bomb++;
+                if (Algorithm::field[x-1][y]   == 10)   amount_bomb++;
             }
             else if (x != (Algorithm::size_field-1)) {
                 if (y != 0)
-                    if (Algorithm::field[x+1][y-1] == 6)   amount_bomb++;
+                    if (Algorithm::field[x+1][y-1] == 10)   amount_bomb++;
 
                 if (y != (Algorithm::size_field-1))
-                    if (Algorithm::field[x+1][y+1] == 6)   amount_bomb++;
+                    if (Algorithm::field[x+1][y+1] == 10)   amount_bomb++;
                 
-                if (Algorithm::field[x+1][y]   == 6)   amount_bomb++;
+                if (Algorithm::field[x+1][y]   == 10)   amount_bomb++;
                 
             }
             else {
                 if (y != 0)
-                    if (Algorithm::field[x][y-1]   == 6)   amount_bomb++;
+                    if (Algorithm::field[x][y-1]   == 10)   amount_bomb++;
 
                 if  (y != (Algorithm::size_field-1))
-                    if (Algorithm::field[x][y+1]   == 6)   amount_bomb++;
+                    if (Algorithm::field[x][y+1]   == 10)   amount_bomb++;
             }
 
             // writing amount of bombs in cell

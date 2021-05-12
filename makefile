@@ -12,11 +12,11 @@ all: clean compile execute
 
 clean:
 	@echo "🧹 Cleaning ..."
-	-rm $(MAIN_FILE).o $(ALG).o $(EXEC_FILE) 
+	-rm $(MAIN_FILE).o $(ALG).o $(ILL).o $(EXEC_FILE) 
 
-compile: $(MAIN_FILE).o $(ALG).o
+compile: $(MAIN_FILE).o $(ALG).o $(ILL).o
 	@echo "🚧 Building ..."
-	$(CXX) $(MAIN_FILE).o $(ALG).o -o $(EXEC_FILE) $(SFML_FLAGS)
+	$(CXX) $(MAIN_FILE).o $(ALG).o $(ILL).o -o $(EXEC_FILE) $(SFML_FLAGS)
 
 $(MAIN_FILE).o:
 	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(MAIN_FILE).cpp

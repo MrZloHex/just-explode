@@ -1,4 +1,5 @@
 #include "Algorithm.hpp"
+#include "Illustration.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
@@ -6,6 +7,12 @@ using namespace std;
 using namespace sf;
 
 int main() {
+    int *color;
+    color = Colorize(14);
+
+    for (int i = 0; i < 3; i++)
+        cout << color[i] << endl;
+
     // initializating algorihm all fields of data
     auto algorithm = new Algorithm(0xC, 0x19);
 
