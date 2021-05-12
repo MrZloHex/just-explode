@@ -32,6 +32,9 @@ class Algorithm {
             false - left button on mouse     */
         void bomb_handler(bool mouse, unsigned int x, unsigned int y);
 
+        // BOOOOM script game over
+        void BOOOM();
+
 
         /* getting type of cell in field
             true - field

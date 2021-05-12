@@ -8,7 +8,7 @@ using namespace sf;
 
 int main() {
     // initializating algorihm all fields of data
-    auto algorithm = new Algorithm(0xC, 0x19);
+    auto algorithm = new Algorithm(12, 25);
 
     algorithm->init_fields();
     algorithm->generate_map();
@@ -36,11 +36,12 @@ int main() {
                     window.close();
 
 
-            if (event.type == Event::MouseButtonPressed)
+            if (event.type == Event::MouseButtonPressed) {
                 if (event.key.code == Mouse::Left) 
                     algorithm->bomb_handler(false, x, y);
                 else if (event.key.code == Mouse::Right)
                     algorithm->bomb_handler(true, x, y);
+            }
         }
 
         // update frame

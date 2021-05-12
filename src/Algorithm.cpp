@@ -3,23 +3,23 @@
 
 using namespace std;
 
-/*
-        0 - nothing
-        1 - 1 bomb around
-        2 - 2 bombs
-        3 - 3
-        4 - 4 
-        5 - 5
-        6 - 6
-        7 - 7
-        8 - 8
 
-        10 - BOMBEE
-        11 - rejected mine
-        12 - idk
-        13 - BOOOOOOM
-        14 - WIN
-*/
+const uint8_t nothing      = 0; //        0 - nothing
+const uint8_t bomb_1       = 1;  //        1 - 1 bomb around
+const uint8_t bomb_2       = 2;  //        2 - 2 bombs
+const uint8_t bomb_3       = 3;  //        3 - 3
+const uint8_t bomb_4       = 3;  //      4 - 4 
+const uint8_t bomb_5       = 3;  //      5 - 5
+const uint8_t bomb_6       = 3;  //      6 - 6
+const uint8_t bomb_7       = 3;  //      7 - 7
+const uint8_t bomb_8       = 3;  //      8 - 8
+
+const uint8_t BOMB         = 10;  //      10 - BOMBEE
+const uint8_t labeled_bomb = 11;  //      11 - rejected mine
+const uint8_t idk          = 12;  //      12 - idk
+const uint8_t BOOM         = 13;  //      13 - BOOOOOOM
+const uint8_t WIN          = 14;  //      14 - WIN
+
 
 
 // constructor
@@ -55,11 +55,11 @@ void Algorithm::init_fields() {
     for (short x = 0; x < Algorithm::size_field; x++)
         for (short y = 0; y < Algorithm::size_field; y++) {
             // idk cells for playes
-            Algorithm::show_field[x][y] = 12;
+            Algorithm::show_field[x][y] = idk;
 
             // adding bombs at main field whith chance in 20%
-            if (rand()%5 == 0) Algorithm::field[x][y] = 10;
-            else Algorithm::field[x][y] = 0;
+            if (rand()%5 == 0) Algorithm::field[x][y] = BOMB;
+            else Algorithm::field[x][y] = nothing;
         }
 }
 
@@ -73,7 +73,7 @@ void Algorithm::generate_map() {
             unsigned short amount_bomb = 0;
 
             // do not count bomb for cell with bomb )
-            if (Algorithm::field[x][y] == 10)   continue;
+            if (Algorithm::field[x][y] == BOMB)   continue;
 
 
             if (x != 0) {
@@ -109,8 +109,19 @@ void Algorithm::generate_map() {
 }
 
 
-void bomb_handler(bool mouse, unsigned int x, unsigned int y){
-    
+void Algorithm::bomb_handler(bool mouse, unsigned int x, unsigned int y){
+    if (!mouse) {
+        if(Algorithm::field[x][y] == 10) Algorithm::BOOOM();
+        else Algorithm::show_field[x][y] = Algorithm::field[x][y];
+    }
+    else Algorithm::show_field[x][y] = labeled_bomb;
+}
+
+void Algorithm::BOOOM() {
+    for (short x = 0; x < Algorithm::size_field; x++) 
+        for (short y = 0; y < Algorithm::size_field; y++) {
+            show_field[x][y] = BOOM;
+        }
 }
 
 
