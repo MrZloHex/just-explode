@@ -1,12 +1,15 @@
 #include "Algorithm.hpp"
 #include "Illustration.hpp"
 #include <iostream>
+#include <tuple>
+#include <utility>
 #include <SFML/Graphics.hpp>
 
 using namespace std;
 using namespace sf;
 
 int main() {
+
     // initializating algorihm all fields of data
     auto algorithm = new Algorithm(12, 25);
 
@@ -51,8 +54,11 @@ int main() {
 
                 int *Colour = Colorize(algorithm->get_type_of_cell(false, x, y));
 
-                square.setFillColor(Color(Colour[0], Colour[1], Colour[2]));
+                /*auto t = make_tuple(Colour[0], Colour[1], Colour[2]);
+                square.setFillColor(std::apply(Color, t));*/
 
+                square.setFillColor(Color(Colour[0], Colour[1], Colour[2]));
+          
                 square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));
                 window.draw(square);
             }
