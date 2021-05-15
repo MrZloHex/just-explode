@@ -55,7 +55,7 @@ void Algorithm::init_fields() {
     for (short x = 0; x < Algorithm::size_field; x++)
         for (short y = 0; y < Algorithm::size_field; y++) {
             // idk cells for playes
-            Algorithm::show_field[x][y] = idk;
+            Algorithm::show_field[x][y] = bomb_1;
 
             // adding bombs at main field whith chance in 20%
             if (rand()%5 == 0) Algorithm::field[x][y] = BOMB;

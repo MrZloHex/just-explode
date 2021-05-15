@@ -1,4 +1,4 @@
-#include "Illustration.hpp"
+#include "Functions.hpp"
 
 int *Colorize(unsigned short type) {
     static int color[3];

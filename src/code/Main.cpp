@@ -1,12 +1,14 @@
 #include "Algorithm.hpp"
-#include "Illustration.hpp"
+#include "Functions.hpp"
 #include <iostream>
-#include <tuple>
-#include <utility>
+/*#include <tuple>
+#include <utility>*/
 #include <SFML/Graphics.hpp>
 
 using namespace std;
 using namespace sf;
+
+const bool dev = false; // false - normal mode, true - dev mode 
 
 int main() {
 
@@ -48,20 +50,28 @@ int main() {
         }
 
         // update frame
+        window.clear();
+
         for (short x = 0; x < algorithm->get_size_field(); x++)
             for (short y = 0; y < algorithm->get_size_field(); y++) {
-                RectangleShape square(Vector2f(algorithm->get_size_cell()-2, algorithm->get_size_cell()-2));
+                
+                /*RectangleShape square(Vector2f(algorithm->get_size_cell(), algorithm->get_size_cell()));
 
-                int *Colour = Colorize(algorithm->get_type_of_cell(false, x, y));
+                int *Colour = Colorize(algorithm->get_type_of_cell(dev, x, y));*/
 
-                /*auto t = make_tuple(Colour[0], Colour[1], Colour[2]);
-                square.setFillColor(std::apply(Color, t));*/
+                /*auto t = make_tuple(Colour[0], Colour[1], Colour[2], 0);
+                square.setFillColor(std::apply(Color::Color, t));*/
 
-                square.setFillColor(Color(Colour[0], Colour[1], Colour[2]));
+                /*square.setFillColor(Color(Colour[0], Colour[1], Colour[2]));
           
+                square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));*/
+                Texture texture;
+                texture.loadFromFile("./src/img/1.png");
+                Sprite square;
+                square.setTexture(texture);
                 square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));
                 window.draw(square);
-            }
+            }   
         window.display();
     }
 
