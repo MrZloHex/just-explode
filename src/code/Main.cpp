@@ -66,7 +66,7 @@ int main() {
           
                 square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));*/
                 Texture texture;
-                texture.loadFromFile("./src/img/1.png");
+                texture.loadFromFile(Colorize(algorithm->get_type_of_cell(dev, x, y)));
                 Sprite square;
                 square.setTexture(texture);
                 square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));

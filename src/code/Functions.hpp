@@ -1,3 +1,6 @@
 #pragma once
+#include <string>
 
-int *Colorize(unsigned short type);
+using namespace std;
+
+string Colorize(unsigned short type);

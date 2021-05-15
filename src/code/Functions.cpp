@@ -1,25 +1,27 @@
 #include "Functions.hpp"
+#include <string>
 
-int *Colorize(unsigned short type) {
-    static int color[3];
+using namespace std;
+
+string Colorize(unsigned short type) {
+    string dir = "./src/img/";
 
     //                                R                G                B
-    if      (type ==  0) {color[0] = 0x5D; color[1] = 0x5D; color[2] = 0x5D;}
-    else if (type ==  1) {color[0] = 0x00; color[1] = 0x80; color[2] = 0xFF;}
-    else if (type ==  2) {color[0] = 0x3A; color[1] = 0xFF; color[2] = 0x3A;}
-    else if (type ==  3) {color[0] = 0xFF; color[1] = 0xFF; color[2] = 0x00;}
-    else if (type ==  4) {color[0] = 0xFF; color[1] = 0x3A; color[2] = 0x3A;}
-    else if (type ==  5) {color[0] = 0x80; color[1] = 0x00; color[2] = 0xFF;}
+    if      (type ==  0) {dir.append("o.png");}
+    else if (type ==  1) {dir.append("1.png");}
+    else if (type ==  2) {dir.append("2.png");}
+    else if (type ==  3) {dir.append("3.png");}
+    else if (type ==  4) {dir.append("4.png");}
+    else if (type ==  5) {dir.append("5.png");}
+    else if (type ==  6) {dir.append("6.png");}
+    else if (type ==  7) {dir.append("7.png");}
+    else if (type ==  8) {dir.append("8.png");}
 
-    else if (type ==  6) {color[0] = 0x5D; color[1] = 0x5D; color[2] = 0x5D;}
-    else if (type ==  7) {color[0] = 0x5D; color[1] = 0x5D; color[2] = 0x5D;}
-    else if (type ==  8) {color[0] = 0x5D; color[1] = 0x5D; color[2] = 0x5D;}
+    else if (type == 10) {dir.append("10.png");}
+    else if (type == 11) {dir.append("11.png");}
+    else if (type == 12) {dir.append("12.png");}
+    else if (type == 13) {dir.append("13.png");}
+    else if (type == 14) {dir.append("14.png");}
 
-    else if (type == 10) {color[0] = 0x00; color[1] = 0x00; color[2] = 0x00;}
-    else if (type == 11) {color[0] = 0xFF; color[1] = 0xFF; color[2] = 0xFF;}
-    else if (type == 12) {color[0] = 0xD1; color[1] = 0xD1; color[2] = 0xD1;}
-    else if (type == 13) {color[0] = 0xFF; color[1] = 0x80; color[2] = 0x00;}
-    else if (type == 14) {color[0] = 0x00; color[1] = 0xFF; color[2] = 0xFF;}
-
-    return color;
+    return dir;
 }
