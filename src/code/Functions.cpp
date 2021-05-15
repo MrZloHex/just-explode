@@ -7,7 +7,7 @@ string Colorize(unsigned short type) {
     string dir = "./src/img/";
 
     //                                R                G                B
-    if      (type ==  0) {dir.append("o.png");}
+    if      (type ==  0) {dir.append("0.png");}
     else if (type ==  1) {dir.append("1.png");}
     else if (type ==  2) {dir.append("2.png");}
     else if (type ==  3) {dir.append("3.png");}

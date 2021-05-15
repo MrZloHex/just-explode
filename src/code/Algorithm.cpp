@@ -8,11 +8,11 @@ const uint8_t nothing      = 0; //        0 - nothing
 const uint8_t bomb_1       = 1;  //        1 - 1 bomb around
 const uint8_t bomb_2       = 2;  //        2 - 2 bombs
 const uint8_t bomb_3       = 3;  //        3 - 3
-const uint8_t bomb_4       = 3;  //      4 - 4 
-const uint8_t bomb_5       = 3;  //      5 - 5
-const uint8_t bomb_6       = 3;  //      6 - 6
-const uint8_t bomb_7       = 3;  //      7 - 7
-const uint8_t bomb_8       = 3;  //      8 - 8
+const uint8_t bomb_4       = 4;  //      4 - 4 
+const uint8_t bomb_5       = 5;  //      5 - 5
+const uint8_t bomb_6       = 6;  //      6 - 6
+const uint8_t bomb_7       = 7;  //      7 - 7
+const uint8_t bomb_8       = 8;  //      8 - 8
 
 const uint8_t BOMB         = 10;  //      10 - BOMBEE
 const uint8_t labeled_bomb = 11;  //      11 - rejected mine
@@ -55,7 +55,7 @@ void Algorithm::init_fields() {
     for (short x = 0; x < Algorithm::size_field; x++)
         for (short y = 0; y < Algorithm::size_field; y++) {
             // idk cells for playes
-            Algorithm::show_field[x][y] = bomb_1;
+            Algorithm::show_field[x][y] = idk;
 
             // adding bombs at main field whith chance in 20%
             if (rand()%5 == 0) Algorithm::field[x][y] = BOMB;
