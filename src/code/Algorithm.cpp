@@ -60,7 +60,7 @@ void Algorithm::init_fields() {
             // adding bombs at main field whith chance in 20%
             if (rand()%5 == 0) Algorithm::field[x][y] = BOMB;
             else Algorithm::field[x][y] = nothing;
-        }
+        } 
 }
 
 
@@ -75,8 +75,114 @@ void Algorithm::generate_map() {
             // do not count bomb for cell with bomb )
             if (Algorithm::field[x][y] == BOMB)   continue;
 
+            if (x == 0) {
+                if (y == 0) {
+                    if (Algorithm::field[x+1][y] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y+1] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x][y+1] == 10)
+                        amount_bomb++;
+                }
+                else if (y > 0 && y < (Algorithm::size_field-1)) {
+                    
+                    if (Algorithm::field[x][y-1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y-1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y+1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x][y+1] == 10) 
+                        amount_bomb++;
+                }
+                else if (y == (Algorithm::size_field-1)) {
+                    if (Algorithm::field[x][y-1] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y-1] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y] == 10)
+                        amount_bomb++;
+                }
+            }
+            else if (x > 0 && x < (Algorithm::size_field-1)) {
+                if (y == 0) {
+                    if (Algorithm::field[x-1][y] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y+1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x][y+1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y+1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y] == 10) 
+                        amount_bomb++;
+                }
+                else if (y > 0 && y < (Algorithm::size_field-1)) {
+                    if (Algorithm::field[x-1][y-1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x][y-1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y-1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x+1][y+1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x][y+1] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y+1] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y] == 10)
+                        amount_bomb++;
+                }
+                else if (y == (Algorithm::size_field-1)) {
+                    if (Algorithm::field[x-1][y] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y-1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y+1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x][y+1] == 10) 
+                        amount_bomb++;
+                }
+            }
+            else if (x == (Algorithm::size_field-1)) {
+                if (y == 0) {
+                    if (Algorithm::field[x-1][y] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y+1] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x][y+1] == 10)
+                        amount_bomb++;
+                }
+                else if (y > 0 && y < (Algorithm::size_field-1)) {
+                    
+                    if (Algorithm::field[x][y+1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y+1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y-1] == 10) 
+                        amount_bomb++;
+                    if (Algorithm::field[x][y-1] == 10) 
+                        amount_bomb++;
+                }
+                else if (y == (Algorithm::size_field-1)) {
+                    if (Algorithm::field[x-1][y] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x-1][y-1] == 10)
+                        amount_bomb++;
+                    if (Algorithm::field[x][y-1] == 10)
+                        amount_bomb++;
+                }
+            }
 
-            if (x != 0) {
+            /*if (x != 0) {
                 if (y != 0) 
                     if (Algorithm::field[x-1][y-1] == 10)   amount_bomb++;
 
@@ -95,17 +201,23 @@ void Algorithm::generate_map() {
                 if (Algorithm::field[x+1][y]   == 10)   amount_bomb++;
                 
             }
-            else {
+            if (x > 0 && x < (Algorithm::size_field-1)) {
+                cout << x << ' ' << y << endl;
                 if (y != 0)
                     if (Algorithm::field[x][y-1]   == 10)   amount_bomb++;
 
                 if  (y != (Algorithm::size_field-1))
                     if (Algorithm::field[x][y+1]   == 10)   amount_bomb++;
-            }
+                
+                if (Algorithm::field[x+1][y+1] == 10)
+                    amount_bomb++;
+            }*/
 
             // writing amount of bombs in cell
             Algorithm::field[x][y] = amount_bomb;
-        }           
+            cout << endl;
+        }   
+    //Algorithm::field[0][1] = bomb_8;        
 }
 
 

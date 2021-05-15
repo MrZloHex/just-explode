@@ -8,7 +8,7 @@
 using namespace std;
 using namespace sf;
 
-const bool dev = true; // false - normal mode, true - dev mode 
+const bool dev = false; // false - normal mode, true - dev mode 
 
 int main() {
 
