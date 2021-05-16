@@ -1,5 +1,4 @@
 #include "Functions.hpp"
-#include <string>
 
 using namespace std;
 
@@ -24,4 +23,12 @@ string Colorize(unsigned short type) {
     else if (type == 14) {dir.append("14.png");}
 
     return dir;
+}
+
+bool mine(Algorithm algorithm) {
+
+    usleep(1000000);
+    for (short x = 0; x < size_field; x++) 
+        for (short y = 0; y < Algorithm::size_field; y++) {
+        }
 }

@@ -215,7 +215,6 @@ void Algorithm::generate_map() {
 
             // writing amount of bombs in cell
             Algorithm::field[x][y] = amount_bomb;
-            cout << endl;
         }   
     //Algorithm::field[0][1] = bomb_8;        
 }
@@ -232,7 +231,8 @@ void Algorithm::bomb_handler(bool mouse, unsigned int x, unsigned int y){
 void Algorithm::BOOOM() {
     for (short x = 0; x < Algorithm::size_field; x++) 
         for (short y = 0; y < Algorithm::size_field; y++) {
-            show_field[x][y] = BOOM;
+            if (field[x][y] == BOMB) 
+                show_field[x][y] = BOOM;
         }
 }
 

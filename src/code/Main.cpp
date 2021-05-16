@@ -11,9 +11,8 @@ using namespace sf;
 const bool dev = false; // false - normal mode, true - dev mode 
 
 int main() {
-
     // initializating algorihm all fields of data
-    auto algorithm = new Algorithm(12, 25);
+    auto algorithm = new Algorithm(18, 25);
 
     algorithm->init_fields();
     algorithm->generate_map();
@@ -24,6 +23,11 @@ int main() {
 
     // life cycle
     while (window.isOpen()) {
+        // cheching for game over
+        if (mine(algorithm))
+            window.close();
+
+
         // detecting dislocation of mouse pointer
         Vector2i position = Mouse::getPosition(window);
         unsigned int x = position.x/algorithm->get_size_cell();
@@ -54,22 +58,13 @@ int main() {
 
         for (short x = 0; x < algorithm->get_size_field(); x++)
             for (short y = 0; y < algorithm->get_size_field(); y++) {
-                
-                /*RectangleShape square(Vector2f(algorithm->get_size_cell(), algorithm->get_size_cell()));
-
-                int *Colour = Colorize(algorithm->get_type_of_cell(dev, x, y));*/
-
-                /*auto t = make_tuple(Colour[0], Colour[1], Colour[2], 0);
-                square.setFillColor(std::apply(Color::Color, t));*/
-
-                /*square.setFillColor(Color(Colour[0], Colour[1], Colour[2]));
-          
-                square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));*/
                 Texture texture;
                 texture.loadFromFile(Colorize(algorithm->get_type_of_cell(dev, x, y)));
+
                 Sprite square;
                 square.setTexture(texture);
                 square.setPosition((x*algorithm->get_size_cell()), (y*algorithm->get_size_cell()));
+
                 window.draw(square);
             }   
         window.display();
