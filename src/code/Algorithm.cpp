@@ -219,10 +219,46 @@ void Algorithm::generate_map() {
     //Algorithm::field[0][1] = bomb_8;        
 }
 
+void Algorithm::noth(unsigned int x, unsigned int y) {
+    Algorithm::show_field[x-1][y-1] = Algorithm::field[x][y];
+    if ( Algorithm::field[x-1][y-1] == 0) 
+        Algorithm::noth(  x-1, y-1);
+
+    Algorithm::show_field[x][y-1] = Algorithm::field[x][y];
+    if ( Algorithm::field[x][y-1]   == 0) 
+        Algorithm::noth(  x, y-1);
+
+    Algorithm::show_field[x+1][y-1] = Algorithm::field[x][y];
+    if ( Algorithm::field[x+1][y-1] == 0) 
+        Algorithm::noth(  x+1, y-1);
+
+    Algorithm::show_field[x+1][y] = Algorithm::field[x][y];
+    if ( Algorithm::field[x+1][y]   == 0) 
+        Algorithm::noth(  x+1, y);
+
+    Algorithm::show_field[x+1][y+1] = Algorithm::field[x][y];
+    if ( Algorithm::field[x+1][y+1] == 0) 
+        Algorithm::noth(  x+1, y+1);
+
+    Algorithm::show_field[x][y+1] = Algorithm::field[x][y];
+    if ( Algorithm::field[x][y+1]   == 0)
+        Algorithm::noth(  x, y+1);
+
+    Algorithm::show_field[x-1][y+1] = Algorithm::field[x][y];
+    if ( Algorithm::field[x-1][y+1] == 0)
+        Algorithm::noth(  x-1, y+1);
+
+    Algorithm::show_field[x-1][y] = Algorithm::field[x][y];
+    if ( Algorithm::field[x-1][y]   == 0)
+        Algorithm::noth(  x-1, y);
+}
 
 void Algorithm::bomb_handler(bool mouse, unsigned int x, unsigned int y){
     if (!mouse) {
-        if(Algorithm::field[x][y] == 10) Algorithm::BOOOM();
+        if(Algorithm::field[x][y] == 10) 
+            Algorithm::BOOOM();
+        else if (Algorithm::field[x][y] == 0) 
+            Algorithm::noth(x, y);
         else Algorithm::show_field[x][y] = Algorithm::field[x][y];
     }
     else Algorithm::show_field[x][y] = labeled_bomb;

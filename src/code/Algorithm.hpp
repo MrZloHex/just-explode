@@ -12,6 +12,8 @@ class Algorithm {
         // game field which player sees
         unsigned short **show_field;
 
+        void noth(unsigned int x, unsigned int y);
+
 
     public:
         // constructor of class; size_field, size_cell
