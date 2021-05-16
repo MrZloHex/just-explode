@@ -1,9 +1,3 @@
-#ifdef _WIN32
-#include <Windows.h>
-#else
-#include <unistd.h>
-#endif
-
 #pragma once
 
 #include <string>
@@ -12,4 +6,3 @@
 using namespace std;
 
 string Colorize(unsigned short type);
-bool mine(Algorithm algorithm);

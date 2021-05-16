@@ -24,11 +24,3 @@ string Colorize(unsigned short type) {
 
     return dir;
 }
-
-bool mine(Algorithm algorithm) {
-
-    usleep(1000000);
-    for (short x = 0; x < size_field; x++) 
-        for (short y = 0; y < Algorithm::size_field; y++) {
-        }
-}

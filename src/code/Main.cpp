@@ -4,15 +4,17 @@
 /*#include <tuple>
 #include <utility>*/
 #include <SFML/Graphics.hpp>
+#include <unistd.h>
 
 using namespace std;
 using namespace sf;
 
-const bool dev = false; // false - normal mode, true - dev mode 
+const bool dev = false;
+const unsigned short size_pi = 18;
 
 int main() {
     // initializating algorihm all fields of data
-    auto algorithm = new Algorithm(18, 25);
+    auto algorithm = new Algorithm(size_pi, 25);
 
     algorithm->init_fields();
     algorithm->generate_map();
@@ -24,8 +26,14 @@ int main() {
     // life cycle
     while (window.isOpen()) {
         // cheching for game over
-        if (mine(algorithm))
-            window.close();
+        for (short x = 0; x < algorithm->get_size_field(); x++)
+            for (short y = 0; y < algorithm->get_size_field(); y++) {
+                if (algorithm->get_type_of_cell(false, x, y) == 13) {
+                    usleep(1000000);
+                    window.close();
+                    return 0;
+                }
+            }
 
 
         // detecting dislocation of mouse pointer
