@@ -1,32 +1,39 @@
-CXX			:= g++
-CXX_FLAGS	:= --std=c++20 -c -Wall -Wextra
-SFML_FLAGS	:= -lsfml-graphics -lsfml-window -lsfml-system
+CC = clang 
+CFLAGS =  -g -O0 -Wall -Wextra -Wpedantic -std=c11 -Wstrict-aliasing
+CFLAGS += -Wno-pointer-arith -Wno-newline-eof -Wno-unused-parameter -Wno-gnu-statement-expression
+CFLAGS += -Wno-gnu-compound-literal-initializer -Wno-gnu-zero-variadic-macro-arguments
+CFLAGS += -Ilib/glfw/include -Iinc -Ilib/glad/include
 
-MAIN_FILE	:= Main
-ALG			:= Algorithm
-FUN			:= Functions
-SRC_DIR		:= ./src/code
-EXEC_FILE	:= just-explode
+LDFLAGS = lib/glfw/src/libglfw3.a lib/glad/src/glad.o -lm -ldl -lpthread -lncurses -lmenu
 
-all: clean compile execute
+TARGET = atlanta 
 
-clean:
-	@echo "🧹 Cleaning ..."
-	-rm $(MAIN_FILE).o $(ALG).o $(FUN).o $(EXEC_FILE) 
+SRC = src
+OBJ = obj
+BIN = bin
 
-compile: $(MAIN_FILE).o $(ALG).o $(FUN).o
-	@echo "🚧 Building ..."
-	$(CXX) $(MAIN_FILE).o $(ALG).o $(FUN).o -o $(EXEC_FILE) $(SFML_FLAGS)
+SOURCES  = $(wildcard src/**/*.c) $(wildcard src/*.c)
+OBJECTS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SOURCES))
 
-$(MAIN_FILE).o:
-	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(MAIN_FILE).cpp
 
-$(ALG).o:
-	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(ALG).cpp
+all: compile clean
 
-$(FUN).o:
-	$(CXX) $(CXX_FLAGS) $(SRC_DIR)/$(FUN).cpp
+compile: binary 
+run: compile execute clean
+
+libs:
+	cd lib/glad && $(CC) -o src/glad.o -Iinclude -c src/gl.c
+	cd lib/glfw && cmake . && make
+
+binary: $(OBJECTS)
+	$(CC) -o $(BIN)/$(TARGET) $^ $(LDFLAGS) 
+
+$(OBJ)/%.o: $(SRC)/%.c
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 execute:
-	@echo "🚀 Executing ..."
-	./$(EXEC_FILE)
+	./$(BIN)/$(TARGET)
+
+clean:
+	-rm $(BIN)/$(TARGET)
+	-rm $(OBJECTS)
