@@ -4,6 +4,7 @@
 #include "ncurses.h"
 
 #include "mine.h"
+#include "choices.h"
 #include "vec.h"
 
 #define AVG_WIN_X(scr) scr->win_size.x / 2
@@ -30,7 +31,7 @@ screen_deinitialize(Screen *screen);
 void
 print_start_menu(Screen *scr, Field *field);
 
-int
+StartMenu
 screen_start_menu(Screen *scr);
 
 

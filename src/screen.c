@@ -27,14 +27,14 @@ screen_deinitialize(Screen *screen)
     free(screen);
 }
 
-int
+StartMenu
 screen_start_menu(Screen *screen)
 {
     attron(A_BOLD);
     mvprintw(AVG_WIN_Y(screen) - 6, AVG_WIN_X(screen) - 7, "JUST EXPLODE");
     attroff(A_BOLD);
 
-    Menu *menu = menu_initialize(0, false, 3, "New Game", "Settings", "Exit");
+    Menu *menu = menu_initialize(0, false, 3, START_MENU_STRINGS);
 
     for (;;)
     {
@@ -61,7 +61,7 @@ screen_start_menu(Screen *screen)
         }
         else if (in_ch == 10)
         {
-            int sel = (int)menu->selected;
+            StartMenu sel = (StartMenu)menu->selected;
             menu_deinitialize(menu);
             return sel;
         }
