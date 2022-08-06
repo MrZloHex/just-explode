@@ -2,14 +2,21 @@
 #define __CHOICES_H__
 
 
-#define START_MENU_STRINGS "New Game", "Settings", "Exit"
+#define START_MENU_STRINGS "New Game", "Continue", "Exit"
 
 typedef enum StartMenu_E
 {
-	SM_NEW_GAME  = (int)0,
-	SM_SETTINGS  = (int)1,
-	SM_EXIT  	 = (int)2
+	SM_NEW_GAME  = 0,
+    SM_CONTINUE  = 1,
+	SM_EXIT  	 = 2
 } StartMenu;
+
+
+typedef enum SetupGameMenu_E
+{
+	SGM_PLAY = 2,
+	SGM_BACK = 3
+} SetupGameMenu;
 
 
 

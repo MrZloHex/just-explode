@@ -24,17 +24,29 @@ explode_deinitialize(Explode *exp)
 bool
 explode_run(Explode *exp)
 {
+   static size_t sel = 0;
     switch (exp->state)
     {
         case START_MENU:
-            switch (screen_start_menu(exp->screen))
+            switch (screen_start_menu(exp->screen, sel))
             {
                 case SM_NEW_GAME:
+                    exp->state = SETUP_GAME;
                     break;
-                case SM_SETTINGS:
+                case SM_CONTINUE:
+                    sel = 1;
                     break;
                 case SM_EXIT:
                     return false;
+            }
+            return true;
+        case SETUP_GAME:
+            switch (screen_setup_game(exp->screen))
+            {
+                case SGM_PLAY:
+                    break;
+                case SGM_BACK:
+                    exp->state = START_MENU;
             }
             return true;
         case NEW_GAME:
@@ -42,7 +54,7 @@ explode_run(Explode *exp)
         case GAME:
             return true;
         case SETTINGS:
-            return true;
+            return false;
     }
     return false;
 }

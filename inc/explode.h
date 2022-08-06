@@ -8,6 +8,7 @@ typedef enum ExplodeState_E
 {
     START_MENU,
     NEW_GAME,
+    SETUP_GAME,
     GAME,
     SETTINGS
 } ExplodeState;
