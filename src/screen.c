@@ -36,16 +36,24 @@ screen_start_menu(Screen *screen, size_t sel)
     mvprintw(AVG_WIN_Y(screen) - 6, AVG_WIN_X(screen) - 7, "JUST EXPLODE");
     attroff(A_BOLD);
 
-    Menu *menu = menu_initialize(sel, false, 3, START_MENU_STRINGS);
+    Menu *menu = menu_initialize
+    (
+        sel, false, 3,
+        variant_new("New Game", 0, 0),
+        variant_new("Continue", 0, 0),
+        variant_new("Exit", 0, 0)
+    );
 
     for (;;)
     {
-        for (size_t i = 0, off = NEG(menu->q_choices / 2); i < menu->q_choices; ++i, ++off)
+        for (size_t i = 0, off = NEG(menu->q_variants/ 2); i < menu->q_variants; ++i, ++off)
         {
             if (i == menu->selected)
                 attron(A_BOLD);
 
-            mvprintw(AVG_WIN_Y(screen) + off, CENTRE_STR(screen, menu->choises[i]), "%s", menu->choises[i]);
+            char *choice = variant_display(menu_get_variant(menu, i));
+            mvprintw(AVG_WIN_Y(screen) + off, CENTRE_STR(screen, choice), "%s", choice);
+            free(choice);
 
             if (i == menu->selected)
                 attroff(A_BOLD);
@@ -85,22 +93,36 @@ screen_setup_game(Screen *screen)
     mvprintw(AVG_WIN_Y(screen) - 6, AVG_WIN_X(screen) - 7, "JUST EXPLODE");
     attroff(A_BOLD);
     
-    Menu *menu = menu_initialize(0, true, 4, "Size: < 16x16 >", "Difficulty: < Normal >", "Play!", "Back to main menu");
+    Menu *menu = menu_initialize
+    (
+        0, true, 4,
+        variant_new("Size", 5, 2, "8x8", "10x10", "10x14", "14x18", "16x16"),
+        variant_new("Difficulty", 3, 1, "Easy", "Norm", "Hard"),
+        variant_new("Play!", 0, 0),
+        variant_new("Back to main menu", 0, 0)
+    );
 
     for (;;)
     {
-        for (size_t i = 0, off = NEG(menu->q_choices / 2); i < menu->q_choices; ++i, ++off)
+        for (size_t i = 0, off = NEG(menu->q_variants / 2); i < menu->q_variants; ++i, ++off)
         {
             if (i == 2)
                 off++;
             else if (i == 3)
                 off += 3;
 
+            if (i == 1 || i == 0)
+            {
+                move(AVG_WIN_Y(screen) + off, 0);
+                clrtoeol();
+            }
 
             if (i == menu->selected)
                 attron(A_BOLD);
 
-            mvprintw(AVG_WIN_Y(screen) + off, CENTRE_STR(screen, menu->choises[i]), "%s", menu->choises[i]);
+            char *choice = variant_display(menu_get_variant(menu, i));
+            mvprintw(AVG_WIN_Y(screen) + off, CENTRE_STR(screen, choice), "%s", choice);
+            free(choice);
 
             if (i == menu->selected)
                 attroff(A_BOLD);
@@ -123,11 +145,13 @@ screen_setup_game(Screen *screen)
             case KEY_LEFT:
             case 'a':
             case 'A':
+                variant_select_prev(menu_get_variant_ptr(menu, menu->selected));
                 break;
 
             case KEY_RIGHT:
             case 'd':
             case 'D':
+                variant_select_next(menu_get_variant_ptr(menu, menu->selected));
                 break;
 
             case KEY_ENTER:

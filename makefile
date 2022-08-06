@@ -26,6 +26,7 @@ libs:
 	cd lib/glfw && cmake . && make
 
 binary: $(OBJECTS)
+	-rm $(BIN)/$(TARGET)
 	$(CC) -o $(BIN)/$(TARGET) $^ $(LDFLAGS) 
 
 $(OBJ)/%.o: $(SRC)/%.c
@@ -35,5 +36,4 @@ execute:
 	./$(BIN)/$(TARGET)
 
 clean:
-	-rm $(BIN)/$(TARGET)
 	-rm $(OBJECTS)
