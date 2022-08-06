@@ -113,11 +113,23 @@ screen_setup_game(Screen *screen)
             case 'S':
                 menu_select_next(menu);
                 break;
+            
             case KEY_UP:
             case 'w':
             case 'W':
                 menu_select_prev(menu);
                 break;
+            
+            case KEY_LEFT:
+            case 'a':
+            case 'A':
+                break;
+
+            case KEY_RIGHT:
+            case 'd':
+            case 'D':
+                break;
+
             case KEY_ENTER:
             case 10: 
             {
