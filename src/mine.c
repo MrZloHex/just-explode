@@ -1,9 +1,13 @@
 #include "mine.h"
 
+#include <time.h>
+
 
 Field *
 field_initialization(size_t rows, size_t cols)
 {
+	srand(time(NULL));
+
 	Field *field = (Field *)malloc(sizeof(Field));
 	field->rows = rows;
 	field->cols = cols;
@@ -25,6 +29,20 @@ field_initialize(SizePair size)
 	return field_initialization(size.x, size.y);	
 }
 
+void
+field_generate(Field *field, Difficulty diff)
+{
+	for (size_t i = 0; i < field->rows; ++i)
+	{
+		for (size_t j = 0; j < field->cols; ++j)
+		{
+			if (rand() % (2 * k_difficulty_multiplier[diff]) == 1)
+			{
+				field->cells[i][j] = Mine;
+			}
+		}
+	}
+}
 
 Cell
 field_get_cell(Field *field, size_t row, size_t col)

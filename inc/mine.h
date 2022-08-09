@@ -6,7 +6,10 @@
 #include "stdbool.h"
 
 #include "vec.h"
+#include "settings.h"
 
+
+const static k_difficulty_multiplier[Q_DIFS] = { 9, 6, 3 };
 
 typedef enum Cell_E
 {
@@ -27,6 +30,9 @@ field_initialization(size_t rows, size_t cols);
 
 Field *
 field_initialize(SizePair size);
+
+void
+field_generate(Field *field, Difficulty diff);
 
 Cell
 field_get_cell(Field *field, size_t row, size_t col);

@@ -21,10 +21,6 @@ all: compile clean
 compile: binary 
 run: compile execute clean
 
-libs:
-	cd lib/glad && $(CC) -o src/glad.o -Iinclude -c src/gl.c
-	cd lib/glfw && cmake . && make
-
 binary: $(OBJECTS)
 	-rm $(BIN)/$(TARGET)
 	$(CC) -o $(BIN)/$(TARGET) $^ $(LDFLAGS)

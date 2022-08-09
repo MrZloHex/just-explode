@@ -53,6 +53,7 @@ explode_run(Explode *exp)
             return true;
         case NEW_GAME:
             exp->field = field_initialize(k_sizes[exp->settings->field_size]);
+            field_generate(exp->field, exp->settings->diffic);
             exp->state = GAME;
             return true;
         case GAME:

@@ -7,7 +7,8 @@ typedef enum Difficulty_E
 {
     EASY    = 0,
     NORMAL  = 1,
-    HARD    = 2
+    HARD    = 2,
+    Q_DIFS  = 3
 } Difficulty;
 
 typedef enum FieldSize_E
