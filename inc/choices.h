@@ -2,8 +2,6 @@
 #define __CHOICES_H__
 
 
-#define START_MENU_STRINGS "New Game", "Continue", "Exit"
-
 typedef enum StartMenu_E
 {
 	SM_NEW_GAME  = 0,

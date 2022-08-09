@@ -3,6 +3,7 @@
 
 #include "mine.h"
 #include "screen.h"
+#include "settings.h"
 
 typedef enum ExplodeState_E
 {
@@ -18,6 +19,7 @@ typedef struct Explode_S
     ExplodeState state;
     Field *field;
     Screen *screen;
+    Settings *settings;
 } Explode;
 
 Explode *

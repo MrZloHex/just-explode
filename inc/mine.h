@@ -5,6 +5,9 @@
 #include "stdint.h"
 #include "stdbool.h"
 
+#include "vec.h"
+
+
 typedef enum Cell_E
 {
 	Empty,
@@ -21,6 +24,9 @@ typedef struct Field_S
 
 Field *
 field_initialization(size_t rows, size_t cols);
+
+Field *
+field_initialize(SizePair size);
 
 Cell
 field_get_cell(Field *field, size_t row, size_t col);

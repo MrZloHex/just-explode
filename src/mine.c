@@ -19,6 +19,13 @@ field_initialization(size_t rows, size_t cols)
 	return field;
 }
 
+Field *
+field_initialize(SizePair size)
+{
+	return field_initialization(size.x, size.y);	
+}
+
+
 Cell
 field_get_cell(Field *field, size_t row, size_t col)
 {

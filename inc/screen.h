@@ -5,7 +5,7 @@
 
 #include "mine.h"
 #include "choices.h"
-#include "vec.h"
+#include "settings.h"
 
 #define AVG_WIN_X(scr) scr->win_size.x / 2
 #define AVG_WIN_Y(scr) scr->win_size.y / 2
@@ -36,7 +36,7 @@ StartMenu
 screen_start_menu(Screen *scr, size_t sel);
 
 SetupGameMenu
-screen_setup_game(Screen *scr);
+screen_setup_game(Screen *scr, Settings *sett);
 
 
 #endif /* __TUI_H__ */

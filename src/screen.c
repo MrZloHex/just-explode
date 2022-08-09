@@ -85,7 +85,7 @@ screen_start_menu(Screen *screen, size_t sel)
 }
 
 SetupGameMenu
-screen_setup_game(Screen *screen)
+screen_setup_game(Screen *screen, Settings *sett)
 {
     clear();
 
@@ -96,8 +96,8 @@ screen_setup_game(Screen *screen)
     Menu *menu = menu_initialize
     (
         0, true, 4,
-        variant_new("Size", 5, 2, "8x8", "10x10", "10x14", "14x18", "16x16"),
-        variant_new("Difficulty", 3, 1, "Easy", "Norm", "Hard"),
+        variant_new("Size", 5, 1, "8x8", "10x10", "10x14", "14x18", "16x16"),
+        variant_new("Difficulty", 3, 1, "Easy", "Normal", "Hard"),
         variant_new("Play!", 0, 0),
         variant_new("Back to main menu", 0, 0)
     );
@@ -158,6 +158,9 @@ screen_setup_game(Screen *screen)
             case 10: 
             {
                 SetupGameMenu sel = (SetupGameMenu)menu->selected;
+                settings_setup(sett,
+                                (FieldSize)menu->variants[0].selected_value,
+                                (Difficulty)menu->variants[1].selected_value);
                 menu_deinitialize(menu);
                 return sel;
             }

@@ -4,7 +4,7 @@ CFLAGS += -Wno-pointer-arith -Wno-newline-eof -Wno-unused-parameter -Wno-gnu-sta
 CFLAGS += -Wno-gnu-compound-literal-initializer -Wno-gnu-zero-variadic-macro-arguments
 CFLAGS += -Ilib/glfw/include -Iinc -Ilib/glad/include
 
-LDFLAGS = lib/glfw/src/libglfw3.a lib/glad/src/glad.o -lm -ldl -lpthread -lncurses -lmenu
+LDFLAGS = -lncurses 
 
 TARGET = atlanta 
 
@@ -27,7 +27,7 @@ libs:
 
 binary: $(OBJECTS)
 	-rm $(BIN)/$(TARGET)
-	$(CC) -o $(BIN)/$(TARGET) $^ $(LDFLAGS) 
+	$(CC) -o $(BIN)/$(TARGET) $^ $(LDFLAGS)
 
 $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
