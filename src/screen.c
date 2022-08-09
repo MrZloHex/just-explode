@@ -179,57 +179,83 @@ screen_render_game(Screen *screen, Field *field)
     // attron(A_BOLD);
     // mvprintw(AVG_WIN_Y(screen) - 6, AVG_WIN_X(screen) - 7, "+---+ +---+\n| 1 | | @ |\n+---+ +---+\n\n+---+ +---+\n| ! | | 2 |\n+---+ +---+");
     // attroff(A_BOLD);
-    mvprintw(0, 0, "+");
-    for (size_t i = 0; i < field->cols; ++i)
-    {
-        mvprintw(0, i*4+1, "---+");
-    }
-    for (size_t i = 0; i < field->rows; ++i)
-    {
-        mvprintw(i*2+1, 0, "|");
-        mvprintw(i*2+2, 0, "+");
-
-        for (size_t j = 0; j < field->cols; ++j)
-        {
-            mvprintw
-            (
-                i*2+1, j*4+1,
-                " %d |", field->cells[i][j]
-            );
-            mvprintw
-            (
-                i*2+2, j*4+1,
-                "---+"
-            );
-        }
-    }
+    static size_t sel_row = 0, sel_col = 0;
     
-        refresh();
-        for(;;){}
-
+    int x_start = 2, y_start = 2;
+    
     for (;;)
     {
+        
+        for (size_t i = 0; i < field->rows; ++i)
+        {
+            for (size_t j = 0; j < field->cols; ++j)
+            {
+                if ((i == sel_row && j == sel_col) || (i == sel_row && j == sel_col +1) || (i == sel_row +1 && j == sel_col) || (i == sel_row +1 && j == sel_col +1))
+                    attron(A_BOLD);
+
+                mvprintw
+                (
+                    i*2+0 + y_start, j*4 + x_start,
+                    "+"
+                );
+
+                if ((i == sel_row +1 && j == sel_col +1) || (i == sel_row && j == sel_col +1))
+                    attroff(A_BOLD);
+                printw("---+");
+
+                if (i == sel_row +1 && j == sel_col)
+                    attroff(A_BOLD);
+                if (i == sel_row && j == sel_col +1)
+                    attron(A_BOLD);
+
+                mvprintw
+                (
+                    i*2+1 + y_start, j*4 + x_start,
+                    "|"
+                );
+                if (i == sel_row && j == sel_col +1)
+                    attroff(A_BOLD);
+                printw(" %d |", field->cells[i][j]);
+
+                if (i == sel_row && j == sel_col +1)
+                    attron(A_BOLD);
+                mvprintw
+                (
+                    i*2+2 + y_start, j*4 + x_start,
+                    "+"
+                );
+                if (i == sel_row && j == sel_col +1)
+                    attroff(A_BOLD);
+                printw("---+");
+
+                attroff(A_BOLD);
+            }
+        }
         
         switch (wgetch(stdscr))
         {
             case KEY_DOWN:
             case 's':
             case 'S':
+                sel_row++;
                 break;
             
             case KEY_UP:
             case 'w':
             case 'W':
+                sel_row--;
                 break;
             
             case KEY_LEFT:
             case 'a':
             case 'A':
+                sel_col--;
                 break;
 
             case KEY_RIGHT:
             case 'd':
             case 'D':
+                sel_col++;
                 break;
 
             case KEY_ENTER:
