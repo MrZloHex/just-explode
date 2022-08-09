@@ -158,6 +158,9 @@ screen_setup_game(Screen *screen, Settings *sett)
             case 10: 
             {
                 SetupGameMenu sel = (SetupGameMenu)menu->selected;
+                if (sel < 2)
+                    break;
+
                 settings_setup(sett,
                                 (FieldSize)menu->variants[0].selected_value,
                                 (Difficulty)menu->variants[1].selected_value);
@@ -176,12 +179,16 @@ screen_render_game(Screen *screen, Field *field)
 {
     clear();
 
-    // attron(A_BOLD);
-    // mvprintw(AVG_WIN_Y(screen) - 6, AVG_WIN_X(screen) - 7, "+---+ +---+\n| 1 | | @ |\n+---+ +---+\n\n+---+ +---+\n| ! | | 2 |\n+---+ +---+");
-    // attroff(A_BOLD);
     static size_t sel_row = 0, sel_col = 0;
     
-    int x_start = 2, y_start = 2;
+    const int   x_start = AVG_WIN_X(screen) - (4 * field->cols +1) / 2 -1,
+                y_start = AVG_WIN_Y(screen) - (2 * field->rows +1) / 2 -1;
+    
+    
+    attron(A_BOLD);
+    mvprintw(y_start -5, AVG_WIN_X(screen) - 6, "JUST EXPLODE");
+    attroff(A_BOLD);
+    
     
     for (;;)
     {
@@ -249,13 +256,13 @@ screen_render_game(Screen *screen, Field *field)
             case KEY_LEFT:
             case 'a':
             case 'A':
-                sel_col--;
+                sel_col = sel_col == 0 ? field->cols -1 : sel_col -1;
                 break;
 
             case KEY_RIGHT:
             case 'd':
             case 'D':
-                sel_col++;
+                sel_col = sel_col == field->cols -1 ? 0 : sel_col +1;
                 break;
 
             case KEY_ENTER:
