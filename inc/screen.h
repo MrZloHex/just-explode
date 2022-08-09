@@ -29,14 +29,14 @@ screen_initialize();
 void
 screen_deinitialize(Screen *screen);
 
-void
-print_start_menu(Screen *scr, Field *field);
-
 StartMenu
 screen_start_menu(Screen *scr, size_t sel);
 
 SetupGameMenu
 screen_setup_game(Screen *scr, Settings *sett);
+
+void
+screen_render_game(Screen *scr, Field *field);
 
 
 #endif /* __TUI_H__ */

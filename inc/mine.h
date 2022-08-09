@@ -9,7 +9,7 @@
 #include "settings.h"
 
 
-const static k_difficulty_multiplier[Q_DIFS] = { 9, 6, 3 };
+const static int k_difficulty_multiplier[Q_DIFS] = { 9, 6, 3 };
 
 typedef enum Cell_E
 {
@@ -46,8 +46,6 @@ field_set_cell(Field *field, size_t row, size_t col, Cell cell);
 size_t
 _field_count_mines(Field *field, size_t row, size_t col);
 
-void
-field_print(Field *field);
 
 
 #endif /* __MINE_H__ */

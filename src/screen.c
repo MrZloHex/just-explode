@@ -171,9 +171,73 @@ screen_setup_game(Screen *screen, Settings *sett)
 }
 
 
-
 void
-print_start_menu(Screen *scr, Field *field)
+screen_render_game(Screen *screen, Field *field)
 {
+    clear();
 
+    // attron(A_BOLD);
+    // mvprintw(AVG_WIN_Y(screen) - 6, AVG_WIN_X(screen) - 7, "+---+ +---+\n| 1 | | @ |\n+---+ +---+\n\n+---+ +---+\n| ! | | 2 |\n+---+ +---+");
+    // attroff(A_BOLD);
+    mvprintw(0, 0, "+");
+    for (size_t i = 0; i < field->cols; ++i)
+    {
+        mvprintw(0, i*4+1, "---+");
+    }
+    for (size_t i = 0; i < field->rows; ++i)
+    {
+        mvprintw(i*2+1, 0, "|");
+        mvprintw(i*2+2, 0, "+");
+
+        for (size_t j = 0; j < field->cols; ++j)
+        {
+            mvprintw
+            (
+                i*2+1, j*4+1,
+                " %d |", field->cells[i][j]
+            );
+            mvprintw
+            (
+                i*2+2, j*4+1,
+                "---+"
+            );
+        }
+    }
+    
+        refresh();
+        for(;;){}
+
+    for (;;)
+    {
+        
+        switch (wgetch(stdscr))
+        {
+            case KEY_DOWN:
+            case 's':
+            case 'S':
+                break;
+            
+            case KEY_UP:
+            case 'w':
+            case 'W':
+                break;
+            
+            case KEY_LEFT:
+            case 'a':
+            case 'A':
+                break;
+
+            case KEY_RIGHT:
+            case 'd':
+            case 'D':
+                break;
+
+            case KEY_ENTER:
+            case 10: 
+            {
+            }
+        }
+
+        refresh();
+    }
 }

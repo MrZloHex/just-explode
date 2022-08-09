@@ -8,7 +8,7 @@ explode_initialize()
     exp->state = START_MENU;
     exp->screen = screen_initialize();
     exp->field = NULL;
-    exp->settings = settings_initiliaze(NORMAL, S10_10);
+    exp->settings = settings_initiliaze(S10_10, NORMAL);
 
     return exp;
 }
@@ -57,6 +57,7 @@ explode_run(Explode *exp)
             exp->state = GAME;
             return true;
         case GAME:
+            screen_render_game(exp->screen, exp->field);
             return true;
         case SETTINGS:
             return false;

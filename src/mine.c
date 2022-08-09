@@ -95,34 +95,3 @@ _field_count_mines(Field *field, size_t row, size_t col)
 	return mines;
 }
 
-void
-field_print(Field *field)
-{
-	putchar('|');
-	for (size_t j = 0; j < field->cols; ++j)
-		printf("-|");
-	putchar('\n');
-	
-	
-	for (size_t i = 0; i < field->rows; ++i)
-	{
-		putchar('|');
-		for (size_t j = 0; j < field->cols; ++j)
-		{
-			if (field_get_cell(field, i, j) == Empty)
-			{
-				size_t neigh = _field_count_mines(field, i, j);
-				putchar( neigh == 0 ? ' ' : neigh + '0');
-			}
-			else
-			{
-				putchar('*');
-			}
-			putchar('|');
-		}
-		printf("\n|");
-		for (size_t j = 0; j < field->cols; ++j)
-			printf("-|");
-		putchar('\n');
-	}
-}
