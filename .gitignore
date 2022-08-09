@@ -1,5 +1,7 @@
 # sfgp
 gt.sh
 obj/
+bin/
+lib/
 #vscode
 /.vscode
