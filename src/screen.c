@@ -237,13 +237,13 @@ screen_render_game(Screen *screen, Field *field)
             case KEY_DOWN:
             case 's':
             case 'S':
-                sel_row++;
+                sel_row = sel_row == field->rows -1 ? 0 : sel_row +1;
                 break;
             
             case KEY_UP:
             case 'w':
             case 'W':
-                sel_row--;
+                sel_row = sel_row == 0 ? field->rows -1 : sel_row -1;
                 break;
             
             case KEY_LEFT:
