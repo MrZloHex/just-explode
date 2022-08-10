@@ -19,7 +19,8 @@ explode_deinitialize(Explode *exp)
 {
     screen_deinitialize(exp->screen);
     settings_deinitiliaze(exp->settings);
-    field_deinitilize(exp->field);
+    if (exp->field)
+        field_deinitilize(exp->field);
     free(exp);
 }
 

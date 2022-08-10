@@ -1,11 +1,11 @@
-CC = gcc
-CFLAGS =  -g -O0 -Wall -Wextra -Wpedantic -std=c11 -Wstrict-aliasing
+CC = gcc 
+CFLAGS =  -s -O2 -std=c11 -Wstrict-aliasing
 CFLAGS += -Wno-old-style-declaration -Wno-implicit-fallthrough
 CFLAGS += -Ilib/glfw/include -Iinc -Ilib/glad/include
 
 LDFLAGS = -lncurses 
 
-TARGET = atlanta 
+TARGET = jsex 
 
 SRC = src
 OBJ = obj
