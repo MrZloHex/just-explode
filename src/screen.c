@@ -28,7 +28,7 @@ screen_deinitialize(Screen *screen)
 }
 
 StartMenu
-screen_start_menu(Screen *screen, size_t sel)
+screen_start_menu(Screen *screen)
 {
     clear();
 
@@ -38,9 +38,8 @@ screen_start_menu(Screen *screen, size_t sel)
 
     Menu *menu = menu_initialize
     (
-        sel, false, 3,
+        0, false, 2,
         variant_new("New Game", 0, 0),
-        variant_new("Continue", 0, 0),
         variant_new("Exit", 0, 0)
     );
 
@@ -176,14 +175,17 @@ screen_setup_game(Screen *screen, Settings *sett)
 
 
 GameResult
-screen_render_game(Screen *screen, Field *field, Difficulty diff)
+screen_render_game(Screen *screen, Field *field, Difficulty diff, bool gen)
 {
 
 
     clear();
 
-    size_t sel_row = 0, sel_col = 0;
-    bool first_reveal = true;
+    static size_t sel_row = 0, sel_col = 0;
+    if (gen)
+        sel_row = 0, sel_col = 0;
+
+    bool first_reveal = gen;
     
     const int   x_start = AVG_WIN_X(screen) - (4 * field->cols +1) / 2 -1,
                 y_start = AVG_WIN_Y(screen) - (2 * field->rows +1) / 2 -1;
@@ -275,6 +277,10 @@ screen_render_game(Screen *screen, Field *field, Difficulty diff)
 
             case ' ':
                 field_set_flag(field, sel_row, sel_col);
+                break;
+
+            case 27:
+                return GR_PAUSE;
         }
         
         if (field_check_win(field) && !first_reveal)
@@ -334,6 +340,64 @@ screen_game_finish(Screen *screen, bool win)
             case 10: 
             {
                 GameFinishMenu selected = (GameFinishMenu)menu->selected;
+                menu_deinitialize(menu);
+                return selected;
+            }
+
+        }
+
+        refresh();
+    }
+}
+
+GamePauseMenu
+screen_game_pause(Screen *screen)
+{
+    clear();
+
+    attron(A_BOLD);
+    mvprintw(AVG_WIN_Y(screen) - 6, AVG_WIN_X(screen) - 3, "Pause");
+    attroff(A_BOLD);
+
+    Menu *menu = menu_initialize
+    (
+        0, false, 3,
+        variant_new("Resume", 0, 0),
+        variant_new("New Game", 0, 0),
+        variant_new("Exit", 0, 0)
+    );
+
+    for (;;)
+    {
+        for (size_t i = 0, off = NEG(menu->q_variants/ 2); i < menu->q_variants; ++i, ++off)
+        {
+            if (i == menu->selected)
+                attron(A_BOLD);
+
+            char *choice = variant_display(menu_get_variant(menu, i));
+            mvprintw(AVG_WIN_Y(screen) + off, CENTRE_STR(screen, choice), "%s", choice);
+            free(choice);
+
+            if (i == menu->selected)
+                attroff(A_BOLD);
+        }
+
+        switch (wgetch(stdscr))
+        {
+            case KEY_DOWN:
+            case 's':
+            case 'S':
+                menu_select_next(menu);
+                break;
+            case KEY_UP:
+            case 'w':
+            case 'W':
+                menu_select_prev(menu);
+                break;
+            case KEY_ENTER:
+            case 10: 
+            {
+                GamePauseMenu selected = (GamePauseMenu)menu->selected;
                 menu_deinitialize(menu);
                 return selected;
             }

@@ -17,7 +17,6 @@
 
 typedef struct Screen_S
 {
-    WINDOW *win;
     IntPair win_size;
     SizePair cur_pos;
 } Screen;
@@ -30,15 +29,18 @@ void
 screen_deinitialize(Screen *screen);
 
 StartMenu
-screen_start_menu(Screen *scr, size_t sel);
+screen_start_menu(Screen *scr);
 
 SetupGameMenu
 screen_setup_game(Screen *scr, Settings *sett);
 
 GameResult
-screen_render_game(Screen *scr, Field *field, Difficulty diff);
+screen_render_game(Screen *scr, Field *field, Difficulty diff, bool gen);
 
 GameFinishMenu
 screen_game_finish(Screen *scr, bool win);
+
+GamePauseMenu
+screen_game_pause(Screen *scr);
 
 #endif /* __TUI_H__ */
