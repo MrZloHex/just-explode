@@ -11,13 +11,16 @@ field_initialization(size_t rows, size_t cols)
 	Field *field = (Field *)malloc(sizeof(Field));
 	field->rows = rows;
 	field->cols = cols;
-	field->cells = (Cell **)malloc(sizeof(Cell *) * rows);
+	field->minefield = (Cell **)malloc(sizeof(Cell *) * rows);
+	field->playerfield = (PlayerCell **)malloc(sizeof(PlayerCell *) * rows);
 	for (size_t i = 0; i < rows; ++i)
 	{
-		field->cells[i] = (Cell *)malloc(sizeof(Cell) * cols);
+		field->minefield[i] = (Cell *)malloc(sizeof(Cell) * cols);
+		field->playerfield[i] = (PlayerCell *)malloc(sizeof(PlayerCell) * cols);
 		for (size_t j = 0; j < cols; ++j)
 		{
-			field->cells[i][j] = Empty;
+			field->minefield[i][j] = Empty;
+			field->playerfield[i][j] = HIDDEN;
 		}
 	}
 	return field;
@@ -38,7 +41,7 @@ field_generate(Field *field, Difficulty diff)
 		{
 			if (rand() % (2 * k_difficulty_multiplier[diff]) == 1)
 			{
-				field->cells[i][j] = Mine;
+				field->minefield[i][j] = Mine;
 			}
 		}
 	}
@@ -47,7 +50,7 @@ field_generate(Field *field, Difficulty diff)
 Cell
 field_get_cell(Field *field, size_t row, size_t col)
 {
-	return field->cells[row][col];
+	return field->minefield[row][col];
 }
 
 bool
@@ -55,7 +58,7 @@ field_safe_get_cell(Field *field, size_t row, size_t col, Cell *cell)
 {
 	if (row >= 0 && row < field->rows && col >= 0 && col < field->cols)
 	{
-		*cell = field->cells[row][col];
+		*cell = field->minefield[row][col];
 		return true;
 	}
 	else
@@ -67,7 +70,7 @@ field_safe_get_cell(Field *field, size_t row, size_t col, Cell *cell)
 void
 field_set_cell(Field *field, size_t row, size_t col, Cell cell)
 {
-	field->cells[row][col] = cell;
+	field->minefield[row][col] = cell;
 }
 
 size_t
@@ -95,3 +98,39 @@ _field_count_mines(Field *field, size_t row, size_t col)
 	return mines;
 }
 
+char
+field_get_char_cell(Field *field, size_t row, size_t col)
+{
+	PlayerCell cell = field->playerfield[row][col];
+	if (cell == HIDDEN)
+		return ' ';
+	else if (cell == FLAGGED)
+		return '!';
+	else if (cell == EXPLODED_MINE)
+		return '*';
+	else
+		return cell + '0';
+	return '?';
+}
+
+void
+field_set_playercell(Field *field, size_t row, size_t col, PlayerCell cell)
+{
+	field->playerfield[row][col] = cell;
+}
+
+void
+field_reveal_playercell(Field *field, size_t row, size_t col)
+{
+	if (field->playerfield[row][col] == FLAGGED)
+	{
+		field->playerfield[row][col] = HIDDEN;
+	}
+	else
+	{
+		if (field->minefield[row][col] == Mine)
+			field->playerfield[row][col] = EXPLODED_MINE;
+		else
+			field->playerfield[row][col] = (PlayerCell)_field_count_mines(field, row, col);
+	}
+}

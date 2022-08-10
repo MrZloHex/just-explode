@@ -78,6 +78,7 @@ screen_start_menu(Screen *screen, size_t sel)
                 menu_deinitialize(menu);
                 return selected;
             }
+
         }
 
         refresh();
@@ -192,7 +193,6 @@ screen_render_game(Screen *screen, Field *field)
     
     for (;;)
     {
-        
         for (size_t i = 0; i < field->rows; ++i)
         {
             for (size_t j = 0; j < field->cols; ++j)
@@ -222,7 +222,7 @@ screen_render_game(Screen *screen, Field *field)
                 );
                 if (i == sel_row && j == sel_col +1)
                     attroff(A_BOLD);
-                printw(" %d |", field->cells[i][j]);
+                printw(" %c |", field_get_char_cell(field, i, j));
 
                 if (i == sel_row && j == sel_col +1)
                     attron(A_BOLD);
@@ -267,8 +267,11 @@ screen_render_game(Screen *screen, Field *field)
 
             case KEY_ENTER:
             case 10: 
-            {
-            }
+                field_reveal_playercell(field, sel_row, sel_col);
+                break;
+
+            case ' ':
+                field_set_playercell(field, sel_row, sel_col, FLAGGED);
         }
 
         refresh();
