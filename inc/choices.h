@@ -17,5 +17,19 @@ typedef enum SetupGameMenu_E
 } SetupGameMenu;
 
 
+typedef enum GameResult_E
+{
+	GR_GAME_OVER,
+	GR_GAME_WIN,
+	GR_SETTINGS
+} GameResult;
+
+
+typedef enum GameFinishMenu_E
+{
+	GFM_NEW_GAME,
+	GFM_EXIT
+} GameFinishMenu;
+
 
 #endif /* __CHOICES_H__ */

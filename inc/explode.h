@@ -11,7 +11,8 @@ typedef enum ExplodeState_E
     NEW_GAME,
     SETUP_GAME,
     GAME,
-    SETTINGS
+    GAME_PAUSE,
+    GAME_FINISH
 } ExplodeState;
 
 typedef struct Explode_S
@@ -20,6 +21,8 @@ typedef struct Explode_S
     Field *field;
     Screen *screen;
     Settings *settings;
+
+    bool winned;
 } Explode;
 
 Explode *

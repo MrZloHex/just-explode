@@ -35,8 +35,10 @@ screen_start_menu(Screen *scr, size_t sel);
 SetupGameMenu
 screen_setup_game(Screen *scr, Settings *sett);
 
-void
-screen_render_game(Screen *scr, Field *field);
+GameResult
+screen_render_game(Screen *scr, Field *field, Difficulty diff);
 
+GameFinishMenu
+screen_game_finish(Screen *scr, bool win);
 
 #endif /* __TUI_H__ */

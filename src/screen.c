@@ -175,16 +175,18 @@ screen_setup_game(Screen *screen, Settings *sett)
 }
 
 
-void
-screen_render_game(Screen *screen, Field *field)
+GameResult
+screen_render_game(Screen *screen, Field *field, Difficulty diff)
 {
+
+
     clear();
 
-    static size_t sel_row = 0, sel_col = 0;
+    size_t sel_row = 0, sel_col = 0;
+    bool first_reveal = true;
     
     const int   x_start = AVG_WIN_X(screen) - (4 * field->cols +1) / 2 -1,
                 y_start = AVG_WIN_Y(screen) - (2 * field->rows +1) / 2 -1;
-    
     
     attron(A_BOLD);
     mvprintw(y_start -5, AVG_WIN_X(screen) - 6, "JUST EXPLODE");
@@ -197,47 +199,42 @@ screen_render_game(Screen *screen, Field *field)
         {
             for (size_t j = 0; j < field->cols; ++j)
             {
-                if ((i == sel_row && j == sel_col) || (i == sel_row && j == sel_col +1) || (i == sel_row +1 && j == sel_col) || (i == sel_row +1 && j == sel_col +1))
-                    attron(A_BOLD);
-
                 mvprintw
                 (
                     i*2+0 + y_start, j*4 + x_start,
-                    "+"
+                    "+---+"
                 );
-
-                if ((i == sel_row +1 && j == sel_col +1) || (i == sel_row && j == sel_col +1))
-                    attroff(A_BOLD);
-                printw("---+");
-
-                if (i == sel_row +1 && j == sel_col)
-                    attroff(A_BOLD);
-                if (i == sel_row && j == sel_col +1)
-                    attron(A_BOLD);
 
                 mvprintw
                 (
                     i*2+1 + y_start, j*4 + x_start,
-                    "|"
+                    "| %c |", field_get_char_cell(field, i, j)
                 );
-                if (i == sel_row && j == sel_col +1)
-                    attroff(A_BOLD);
-                printw(" %c |", field_get_char_cell(field, i, j));
 
-                if (i == sel_row && j == sel_col +1)
-                    attron(A_BOLD);
                 mvprintw
                 (
                     i*2+2 + y_start, j*4 + x_start,
-                    "+"
+                    "+---+"
                 );
-                if (i == sel_row && j == sel_col +1)
-                    attroff(A_BOLD);
-                printw("---+");
-
-                attroff(A_BOLD);
             }
         }
+        attron(A_BOLD);
+        mvprintw
+        (
+            sel_row*2+0 + y_start, sel_col*4 + x_start,
+            "+---+"
+        );
+        mvprintw
+        (
+            sel_row*2+1 + y_start, sel_col*4 + x_start,
+            "| %c |", field_get_char_cell(field, sel_row, sel_col)
+        );
+        mvprintw
+        (
+            sel_row*2+2 + y_start, sel_col*4 + x_start,
+            "+---+"
+        );
+        attroff(A_BOLD);
         
         switch (wgetch(stdscr))
         {
@@ -267,11 +264,80 @@ screen_render_game(Screen *screen, Field *field)
 
             case KEY_ENTER:
             case 10: 
-                field_reveal_playercell(field, sel_row, sel_col);
+                if (first_reveal)
+                {
+                    field_generate(field, diff, sel_row, sel_col);
+                    first_reveal = false;
+                }
+                if (field_reveal_playercell(field, sel_row, sel_col))
+                    return GR_GAME_OVER;
                 break;
 
             case ' ':
-                field_set_playercell(field, sel_row, sel_col, FLAGGED);
+                field_set_flag(field, sel_row, sel_col);
+        }
+        
+        if (field_check_win(field) && !first_reveal)
+        {
+            return GR_GAME_WIN;
+        }
+
+        refresh();
+    }
+}
+
+GameFinishMenu
+screen_game_finish(Screen *screen, bool win)
+{
+    clear();
+
+    attron(A_BOLD);
+    char *fin_msg = win ? "GAME WIN" : "GAME OVER";
+    mvprintw(AVG_WIN_Y(screen) - 6, AVG_WIN_X(screen) - 5, "%s", fin_msg);
+    attroff(A_BOLD);
+
+    Menu *menu = menu_initialize
+    (
+        0, false, 2,
+        variant_new("New game", 0, 0),
+        variant_new("Exit", 0, 0)
+    );
+
+    for (;;)
+    {
+        for (size_t i = 0, off = NEG(menu->q_variants/ 2); i < menu->q_variants; ++i, ++off)
+        {
+            if (i == menu->selected)
+                attron(A_BOLD);
+
+            char *choice = variant_display(menu_get_variant(menu, i));
+            mvprintw(AVG_WIN_Y(screen) + off, CENTRE_STR(screen, choice), "%s", choice);
+            free(choice);
+
+            if (i == menu->selected)
+                attroff(A_BOLD);
+        }
+
+        switch (wgetch(stdscr))
+        {
+            case KEY_DOWN:
+            case 's':
+            case 'S':
+                menu_select_next(menu);
+                break;
+            case KEY_UP:
+            case 'w':
+            case 'W':
+                menu_select_prev(menu);
+                break;
+            case KEY_ENTER:
+            case 10: 
+            {
+                GameFinishMenu selected = (GameFinishMenu)menu->selected;
+                menu_deinitialize(menu);
+                return selected;
+            }
+
         }
 
         refresh();

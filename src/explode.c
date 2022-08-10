@@ -19,6 +19,7 @@ explode_deinitialize(Explode *exp)
 {
     screen_deinitialize(exp->screen);
     settings_deinitiliaze(exp->settings);
+    field_deinitilize(exp->field);
     free(exp);
 }
 
@@ -53,14 +54,35 @@ explode_run(Explode *exp)
             return true;
         case NEW_GAME:
             exp->field = field_initialize(k_sizes[exp->settings->field_size]);
-            field_generate(exp->field, exp->settings->diffic);
             exp->state = GAME;
             return true;
         case GAME:
-            screen_render_game(exp->screen, exp->field);
+            switch (screen_render_game(exp->screen, exp->field, exp->settings->diffic))
+            {
+                case GR_GAME_OVER:
+                    exp->state = GAME_FINISH;
+                    exp->winned = false;
+                    break;
+                case GR_GAME_WIN:
+                    exp->state = GAME_FINISH;
+                    exp->winned = true;
+                    break;
+                case GR_SETTINGS:;
+            }
             return true;
-        case SETTINGS:
+        case GAME_PAUSE:
             return false;
+        case GAME_FINISH:
+            switch (screen_game_finish(exp->screen, exp->winned))
+            {
+                case GFM_NEW_GAME:
+                    field_deinitilize(exp->field);
+                    exp->state = SETUP_GAME;
+                    break;
+                case GFM_EXIT:
+                    return false;
+            }
+            return true;
     }
     return false;
 }

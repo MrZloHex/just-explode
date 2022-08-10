@@ -39,6 +39,8 @@ typedef struct Field_S
 	PlayerCell **playerfield;
 	size_t rows;
 	size_t cols;
+	size_t q_mines;
+	size_t q_flags;
 } Field;
 
 
@@ -52,13 +54,13 @@ void
 field_deinitilize(Field *field);
 
 void
-field_generate(Field *field, Difficulty diff);
+field_generate(Field *field, Difficulty diff, size_t row, size_t col);
 
 Cell
 field_get_cell(Field *field, size_t row, size_t col);
 
 bool
-field_safe_get_cell(Field *field, size_t row, size_t col, Cell *cell);
+_field_safe_get_cell(Field *field, size_t row, size_t col, Cell *cell);
 
 void
 field_set_cell(Field *field, size_t row, size_t col, Cell cell);
@@ -70,9 +72,12 @@ char
 field_get_char_cell(Field *field, size_t row, size_t col);
 
 void
-field_set_playercell(Field *field, size_t row, size_t col, PlayerCell cell);
+field_set_flag(Field *field, size_t row, size_t col);
 
-void
+bool
 field_reveal_playercell(Field *field, size_t row, size_t col);
+
+bool
+field_check_win(Field *field);
 
 #endif /* __MINE_H__ */
