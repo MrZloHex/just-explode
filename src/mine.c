@@ -78,7 +78,7 @@ field_get_cell(Field *field, size_t row, size_t col)
 bool
 _field_safe_get_cell(Field *field, size_t row, size_t col, Cell *cell)
 {
-	if (row >= 0 && row < field->rows && col >= 0 && col < field->cols)
+	if (row < field->rows && col < field->cols)
 	{
 		*cell = field->minefield[row][col];
 		return true;

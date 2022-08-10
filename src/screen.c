@@ -16,6 +16,7 @@ screen_initialize()
     curs_set(0);
     keypad(stdscr, true);
     nodelay(stdscr, true);
+    ESCDELAY = 0;
     getmaxyx(stdscr, screen->win_size.y, screen->win_size.x);
     return screen;
 }

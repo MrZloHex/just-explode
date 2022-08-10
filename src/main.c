@@ -2,7 +2,7 @@
 
 
 int
-main(int argc, char **argv)
+main()
 {	
 	Explode *explode = explode_initialize();
 	while (explode_run(explode)) {}

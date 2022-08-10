@@ -1,7 +1,6 @@
-CC = clang 
+CC = gcc
 CFLAGS =  -g -O0 -Wall -Wextra -Wpedantic -std=c11 -Wstrict-aliasing
-CFLAGS += -Wno-pointer-arith -Wno-newline-eof -Wno-unused-parameter -Wno-gnu-statement-expression
-CFLAGS += -Wno-gnu-compound-literal-initializer -Wno-gnu-zero-variadic-macro-arguments
+CFLAGS += -Wno-old-style-declaration -Wno-implicit-fallthrough
 CFLAGS += -Ilib/glfw/include -Iinc -Ilib/glad/include
 
 LDFLAGS = -lncurses 
@@ -12,7 +11,7 @@ SRC = src
 OBJ = obj
 BIN = bin
 
-SOURCES  = $(wildcard src/**/*.c) $(wildcard src/*.c)
+SOURCES = $(wildcard src/*.c)
 OBJECTS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SOURCES))
 
 
