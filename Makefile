@@ -1,5 +1,5 @@
 CC = gcc 
-CFLAGS =  -s -O2 -std=c11 -Wstrict-aliasing
+CFLAGS =  -s -O3 -Wall -Wextra -Werror -Wpedantic -std=c11 -Wstrict-aliasing
 CFLAGS += -Wno-old-style-declaration -Wno-implicit-fallthrough
 CFLAGS += -Ilib/glfw/include -Iinc -Ilib/glad/include
 
